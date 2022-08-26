@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/images">
+        <file alias="OQlogo.svg">images/OQlogo.svg</file>
+        <file alias="noxIcon.ico">images/noxIcon.ico</file>
+    </qresource>
+</RCC>
