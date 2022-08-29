@@ -9,7 +9,7 @@ CONFIG += qwt
 
 DEFINES += QWT_DLL
 
-VERSION = 1.0.0
+VERSION = 1.0.1
 DEFINES += PROGRAM_VERSION=\\\"$$VERSION\\\"
 
 # You can make your code fail to compile if it uses deprecated APIs.
