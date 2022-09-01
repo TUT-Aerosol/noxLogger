@@ -9,6 +9,7 @@
 #include <qdatetime.h>
 #include <qwt_plot_picker.h>
 #include <qwt_picker_machine.h>
+#include <qwt_date_scale_draw.h>
 #include "oqpanner.h"
 #include "oqplotcurve.h"
 #include <QPen>
@@ -60,6 +61,7 @@ private:
     quint8 CurveCount;
     QwtPlotPicker *rectZoomPicker;
     OQPanner *livePanner;
+    QwtDateScaleDraw *m_scaleDraw;
 
     struct OQCurves{
         //QwtPlotCurve *Curve;

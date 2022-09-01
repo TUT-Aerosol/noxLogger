@@ -3,7 +3,6 @@
 
 // TODO: Use Modbus instead of ASCII data transfer!
 // TODO: Check for warnings
-// TODO: Check memory leaks in OQPlot
 // TODO: Check antialiasing
 
 #define MAX_PLOT_ITEMS 12*3600
@@ -618,7 +617,7 @@ void MainWindow::autoGenerateNewFile() {
         Log("Could not create new save file; continuing in the current file.");
         return;
     }
-    Log("New save file started (" + oldBaseName + "_" + currentTimeStr + "_" + QString::number(additionalSuffix-1) + "." + oldSuff + ")");
+    Log("New save file started (" + oldBaseName + "_" + currentTimeStr + "_" + QString::number(additionalSuffix-1) + "." + oldSuff + ")"); // FIXME: Assumes that additionalSuffix is included in file name.
     saveFileNumber ++;
 }
 

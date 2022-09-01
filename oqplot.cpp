@@ -35,6 +35,16 @@ OQPlot::OQPlot(QwtPlot *UIPlot, OQPlotType Type, QString Title, QString xLabel, 
 
     livePanner = new OQPanner(Plot->canvas(),Qt::MouseButton::RightButton);
 
+    m_scaleDraw = new QwtDateScaleDraw(Qt::LocalTime);
+    m_scaleDraw->setDateFormat(QwtDate::Millisecond, QString("hh:mm:ss"));
+    m_scaleDraw->setDateFormat(QwtDate::Second, QString("hh:mm:ss"));
+    m_scaleDraw->setDateFormat(QwtDate::Minute, QString("hh:mm:ss"));
+    m_scaleDraw->setDateFormat(QwtDate::Hour, QString("hh:mm:ss"));
+    m_scaleDraw->setDateFormat(QwtDate::Day, QString("hh:mm:ss\ndd.MM.yyyy"));
+    Plot->setAxisScaleDraw(QwtPlot::xBottom, m_scaleDraw);
+    Plot->setAxisScaleEngine(QwtPlot::xBottom, new QwtDateScaleEngine());
+    Plot->setAxisLabelRotation(QwtPlot::xBottom, -45);
+    Plot->setAxisLabelAlignment(QwtPlot::xBottom, Qt::AlignLeft | Qt::AlignBottom);
     connect(rectZoomPicker,SIGNAL(selected(const QRectF &, int)),this,SLOT(zoomToRect(const QRectF &, int)));
     connect(livePanner,SIGNAL(panned(int,int)),this,SLOT(pannedSlot(int,int)));
 }
@@ -159,21 +169,8 @@ bool OQPlot::AddPoint(quint8 Curve, QDateTime Time, double Value){
     Curves[Curve].yData.append(Value);
 
     Curves[Curve].Curve->setSamples(Curves[Curve].xData, Curves[Curve].yData);
-    QwtDateScaleDraw *ScaleDraw = new QwtDateScaleDraw(Qt::LocalTime); //TODO: Don't create new ScaleDraw each time a point is added!
-
-    if (Curves[Curve].xTime[0].msecsTo(Curves[Curve].xTime[Curves[Curve].xTime.length()-1]) < 5000){
-            //ScaleDraw->setDateFormat(QwtDate::Millisecond, QString("hh:mm:ss\ndd.MM.yyyy"));
-        ScaleDraw->setDateFormat(QwtDate::Millisecond, QString("hh:mm:ss"));
-    }
-    else
-            ScaleDraw->setDateFormat(QwtDate::Second, QString("hh:mm:ss"));
-
     Curves[Curve].Curve->setTitle(Curves[Curve].Title + ": " + QString::number(Value, 'f', Curves[Curve].LegendValuePrecision) + " " + Curves[Curve].Unit);
 
-    Plot->setAxisScaleDraw(QwtPlot::xBottom, ScaleDraw);
-    Plot->setAxisScaleEngine(QwtPlot::xBottom, new QwtDateScaleEngine()); //TODO: Don't create new ScaleEngine each time a point is added!
-    Plot->setAxisLabelRotation(QwtPlot::xBottom, -45);
-    Plot->setAxisLabelAlignment(QwtPlot::xBottom, Qt::AlignLeft | Qt::AlignBottom);
     Plot->replot();
 
     return true;
