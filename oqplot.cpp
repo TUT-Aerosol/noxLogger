@@ -159,7 +159,7 @@ bool OQPlot::AddPoint(quint8 Curve, QDateTime Time, double Value){
     Curves[Curve].yData.append(Value);
 
     Curves[Curve].Curve->setSamples(Curves[Curve].xData, Curves[Curve].yData);
-    QwtDateScaleDraw *ScaleDraw = new QwtDateScaleDraw(Qt::LocalTime);
+    QwtDateScaleDraw *ScaleDraw = new QwtDateScaleDraw(Qt::LocalTime); //TODO: Don't create new ScaleDraw each time a point is added!
 
     if (Curves[Curve].xTime[0].msecsTo(Curves[Curve].xTime[Curves[Curve].xTime.length()-1]) < 5000){
             //ScaleDraw->setDateFormat(QwtDate::Millisecond, QString("hh:mm:ss\ndd.MM.yyyy"));
@@ -171,7 +171,7 @@ bool OQPlot::AddPoint(quint8 Curve, QDateTime Time, double Value){
     Curves[Curve].Curve->setTitle(Curves[Curve].Title + ": " + QString::number(Value, 'f', Curves[Curve].LegendValuePrecision) + " " + Curves[Curve].Unit);
 
     Plot->setAxisScaleDraw(QwtPlot::xBottom, ScaleDraw);
-    Plot->setAxisScaleEngine(QwtPlot::xBottom, new QwtDateScaleEngine());
+    Plot->setAxisScaleEngine(QwtPlot::xBottom, new QwtDateScaleEngine()); //TODO: Don't create new ScaleEngine each time a point is added!
     Plot->setAxisLabelRotation(QwtPlot::xBottom, -45);
     Plot->setAxisLabelAlignment(QwtPlot::xBottom, Qt::AlignLeft | Qt::AlignBottom);
     Plot->replot();

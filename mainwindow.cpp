@@ -3,6 +3,8 @@
 
 // TODO: Use Modbus instead of ASCII data transfer!
 // TODO: Check for warnings
+// TODO: Check memory leaks in OQPlot
+// TODO: Check antialiasing
 
 #define MAX_PLOT_ITEMS 12*3600
 
